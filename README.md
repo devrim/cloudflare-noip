@@ -62,26 +62,21 @@ sudo systemctl restart cron
 
 1. Create a new file in `~/Library/LaunchAgents/` called `com.example.cloudflare-noip.plist` with the following contents:
 
-below should work but it doesn't let me know if you have any pointers.
-
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>Label</key>
-    <string>com.example.cloudflare-noip</string>
-    <key>ProgramArguments</key>
-    <array>
-      <string>python</string>
-      <string>/path/to/cloudflare_noip.py</string>
-    </array>
-    <key>StartInterval</key>
-    <dict>
-      <key>Interval</key>
-      <integer>300</integer>
-    </dict>
-  </dict>
+<dict>
+	<key>Label</key>
+	<string>com.example.cloudflare-noip</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/python3</string>
+		<string>/Users/d/Projects/cloudflare-noip/main.py</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>10</integer>
+</dict>
 </plist>
 ```
 
