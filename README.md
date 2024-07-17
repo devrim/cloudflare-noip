@@ -49,6 +49,11 @@ Add the following line to run the script every 5 minutes:
 */60 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
 ```
 
+restart cronjobs
+```bash
+sudo systemctl restart cron
+```
+
 **macOS (using launchd):**
 
 1. Create a new file in `~/Library/LaunchAgents/` called `com.example.cloudflare-noip.plist` with the following contents:
