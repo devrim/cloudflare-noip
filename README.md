@@ -26,10 +26,14 @@ To get your Cloudflare API key and zone ID:
 
 ```json
 [
-    {
-        "type": "A",
-        "name": "your_subdomain"
-    }
+	{
+        "record_name": "sub.domain.xyz",
+        "record_type": "A",
+        "proxied": true
+	},
+	{
+	...
+	}
 ]
 ```
 
@@ -46,7 +50,12 @@ crontab -e
 Add the following line to run the script every 5 minutes:
 
 ```bash
-*/5 * * * * python /path/to/cloudflare_noip.py
+*/60 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
+```
+
+restart cronjobs
+```bash
+sudo systemctl restart cron
 ```
 
 **macOS (using launchd):**
@@ -57,20 +66,17 @@ Add the following line to run the script every 5 minutes:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>Label</key>
-    <string>com.example.cloudflare-noip</string>
-    <key>ProgramArguments</key>
-    <array>
-      <string>python</string>
-      <string>/path/to/cloudflare_noip.py</string>
-    </array>
-    <key>StartInterval</key>
-    <dict>
-      <key>Interval</key>
-      <integer>300</integer>
-    </dict>
-  </dict>
+<dict>
+	<key>Label</key>
+	<string>com.example.cloudflare-noip</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/python3</string>
+		<string>/Users/d/Projects/cloudflare-noip/main.py</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>10</integer>
+</dict>
 </plist>
 ```
 
