@@ -26,10 +26,14 @@ To get your Cloudflare API key and zone ID:
 
 ```json
 [
-    {
-        "type": "A",
-        "name": "your_subdomain"
-    }
+	{
+        "record_name": "sub.domain.xyz",
+        "record_type": "A",
+        "proxied": true
+	},
+	{
+	...
+	}
 ]
 ```
 
