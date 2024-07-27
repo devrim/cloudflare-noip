@@ -47,7 +47,7 @@ The `content` field will be automatically updated with the IP address of the mac
 crontab -e
 ```
 
-Add the following line to run the script every 5 minutes:
+Add the following line to run the script every hour:
 
 ```bash
 */60 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
