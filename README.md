@@ -48,12 +48,13 @@ crontab -e
 ```
 
 Add the following line to run the script every hour:
+(one HN user rightly pointed out that since it's a home server 1 minute update is more appropriate; this frequency is your max downtime.)
 
 ```bash
 */60 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
 ```
 
-restart cronjobs
+restart cron (optional)
 ```bash
 sudo systemctl restart cron
 ```
