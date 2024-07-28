@@ -99,17 +99,16 @@ logging.info(f"main.py is running from: {main_py_path}")
 # Read and process the input JSON file
 with open(f"{main_py_path}/records.json", "r") as f:
     records = json.load(f)
+    
+# Get the current public IP address
+try:
+    with urllib.request.urlopen('https://api.ipify.org') as response:
+        content = response.read().decode().strip()
+except urllib.error.URLError as e:
+    logging.error(f"Failed to get public IP: {e}")
+    exit(1)
 
 for record in records:
-    
-    # Get the current public IP address
-    try:
-        with urllib.request.urlopen('https://api.ipify.org') as response:
-            content = response.read().decode().strip()
-    except urllib.error.URLError as e:
-        logging.error(f"Failed to get public IP: {e}")
-        exit(1)
-    
     # Get proxied value from JSON, default to True if not present
     proxied = record.get('proxied', True)
     

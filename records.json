@@ -1,16 +1,11 @@
 [
     {
-        "record_name": "subdomain.domain.xyz",
+        "record_name": "perforce.luckyrobots.xyz",
         "record_type": "A",
         "proxied": true
     },
     {
-        "record_name": "subdomain1.domain.xyz",
-        "record_type": "A",
-        "proxied": true
-    },
-    {
-        "record_name": "new.domain.xyz",
+        "record_name": "builds.luckyrobots.xyz",
         "record_type": "A",
         "proxied": true
     }
