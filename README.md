@@ -47,11 +47,11 @@ The `content` field will be automatically updated with the IP address of the mac
 crontab -e
 ```
 
-Add the following line to run the script every hour:
+Add the following line to run the script every minute:
 (one HN user rightly pointed out that since it's a home server 1 minute update is more appropriate; this frequency is your max downtime.)
 
 ```bash
-*/60 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
+*/1 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
 ```
 
 restart cron (optional)
@@ -76,7 +76,7 @@ sudo systemctl restart cron
 		<string>/Users/d/Projects/cloudflare-noip/main.py</string>
 	</array>
 	<key>StartInterval</key>
-	<integer>10</integer>
+	<integer>60</integer>
 </dict>
 </plist>
 ```
@@ -92,7 +92,7 @@ launchctl load ~/Library/LaunchAgents/com.example.cloudflare-noip.plist
 1. Open the Task Scheduler: Press the Windows key + R, type `taskschd.msc`, and press Enter.
 2. Create a new task:
 	* General: Give the task a name and description.
-	* Triggers: Create a new trigger with the desired interval (e.g., every 5 minutes).
+	* Triggers: Create a new trigger with the desired interval (e.g., every minute).
 	* Actions: Create a new action to start a program: `python.exe` with the argument `/path/to/cloudflare_noip.py`.
 	* Conditions: Set any additional conditions as needed.
 3. Save the task.
