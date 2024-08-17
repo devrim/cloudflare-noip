@@ -13,14 +13,16 @@ This project provides a free alternative to paid dynamic DNS services like NoIP.
     "api_key": "your_cloudflare_api_key",
     "email": "your_cloudflare_email",
     "zone_id": "your_cloudflare_zone_id"
+    //optional multiple zone ids
+    "zone_ids": [["website_name","cloudflare_zone_id"],["website_name","cloudflare_zone_id"],...]
 }
 ```
 
 To get your Cloudflare API key and zone ID:
 
 - Log in to your Cloudflare account and go to the "My Profile" section.
-- Click on "API Tokens" and create a new token with the "Zone" permission.
-- Copy the API key and zone ID from the token details.
+- Click on "API Tokens" and create a new token with the template " Edit zone DNS" permission.
+- Go to your website overview page, on the bottom right you'll see Zone ID, copy that and paste in to your keys.json
 
 3. Create a `records.json` file in the `~/.cloudflare-noip/` directory with the following structure:
 
@@ -30,6 +32,8 @@ To get your Cloudflare API key and zone ID:
         "record_name": "sub.domain.xyz",
         "record_type": "A",
         "proxied": true
+	//optional if using zone_ids
+	"website_name": "domain.xyz"
 	},
 	{
 	...
