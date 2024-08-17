@@ -13,23 +13,34 @@ This project provides a free alternative to paid dynamic DNS services like NoIP.
     "api_key": "your_cloudflare_api_key",
     "email": "your_cloudflare_email",
     "zone_id": "your_cloudflare_zone_id"
+    //optional multiple zone ids
+    "zone_ids": {
+		  "website_name1":"cloudflare_zone_id1",
+		  "website_name2":"cloudflare_zone_id2"
+		}
 }
 ```
 
 To get your Cloudflare API key and zone ID:
 
 - Log in to your Cloudflare account and go to the "My Profile" section.
-- Click on "API Tokens" and create a new token with the "Zone" permission.
-- Copy the API key and zone ID from the token details.
+- Click on "API Tokens" and create a new token with the template " Edit zone DNS" permission.
+- Go to your website overview page, on the bottom right you'll see Zone ID, copy that and paste in to your keys.json
 
 3. Create a `records.json` file in the `~/.cloudflare-noip/` directory with the following structure:
 
 ```json
 [
-    {
-        "type": "A",
-        "name": "your_subdomain"
-    }
+	{
+        "record_name": "sub.domain.xyz",
+        "record_type": "A",
+        "proxied": true
+	//optional if using zone_ids
+	"website_name": "domain.xyz"
+	},
+	{
+	...
+	}
 ]
 ```
 
@@ -43,10 +54,16 @@ The `content` field will be automatically updated with the IP address of the mac
 crontab -e
 ```
 
-Add the following line to run the script every 5 minutes:
+Add the following line to run the script every minute:
+(one HN user rightly pointed out that since it's a home server 1 minute update is more appropriate; this frequency is your max downtime.)
 
 ```bash
-*/5 * * * * python /path/to/cloudflare_noip.py
+*/1 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
+```
+
+restart cron (optional)
+```bash
+sudo systemctl restart cron
 ```
 
 **macOS (using launchd):**
@@ -57,20 +74,17 @@ Add the following line to run the script every 5 minutes:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>Label</key>
-    <string>com.example.cloudflare-noip</string>
-    <key>ProgramArguments</key>
-    <array>
-      <string>python</string>
-      <string>/path/to/cloudflare_noip.py</string>
-    </array>
-    <key>StartInterval</key>
-    <dict>
-      <key>Interval</key>
-      <integer>300</integer>
-    </dict>
-  </dict>
+<dict>
+	<key>Label</key>
+	<string>com.example.cloudflare-noip</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/python3</string>
+		<string>/Users/d/Projects/cloudflare-noip/main.py</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>60</integer>
+</dict>
 </plist>
 ```
 
@@ -85,7 +99,7 @@ launchctl load ~/Library/LaunchAgents/com.example.cloudflare-noip.plist
 1. Open the Task Scheduler: Press the Windows key + R, type `taskschd.msc`, and press Enter.
 2. Create a new task:
 	* General: Give the task a name and description.
-	* Triggers: Create a new trigger with the desired interval (e.g., every 5 minutes).
+	* Triggers: Create a new trigger with the desired interval (e.g., every minute).
 	* Actions: Create a new action to start a program: `python.exe` with the argument `/path/to/cloudflare_noip.py`.
 	* Conditions: Set any additional conditions as needed.
 3. Save the task.

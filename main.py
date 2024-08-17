@@ -1,8 +1,11 @@
-import requests
 import json
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+import requests
+import urllib.request
+import urllib.error
+import urllib.parse
 
 # Set up logging with rotation
 log_file = '/tmp/cloudflare-noip.log'
@@ -99,7 +102,7 @@ def update_record(record_name, record_type, content, proxied=True, website_name=
             'ttl': 1,  # Auto TTL
             'proxied': proxied
         }
-        response = requests.put(update_url, headers=headers, json=data)
+        req = urllib.request.Request(update_url, data=json.dumps(data).encode(), headers=headers, method='PUT')
     else:
         # Create new record if it doesn't exist
         data = {
@@ -109,7 +112,7 @@ def update_record(record_name, record_type, content, proxied=True, website_name=
             'ttl': 1,
             'proxied': proxied
         }
-        response = requests.post(base_url, headers=headers, json=data)
+        req = urllib.request.Request(base_url, data=json.dumps(data).encode(), headers=headers, method='POST')
     
     if response.status_code in [200, 201]:
         logger.info(f"{record_type} record {'updated' if records else 'created'} successfully for {record_name}")

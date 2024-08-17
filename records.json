@@ -1,0 +1,12 @@
+[
+    {
+        "record_name": "perforce.luckyrobots.xyz",
+        "record_type": "A",
+        "proxied": true
+    },
+    {
+        "record_name": "builds.luckyrobots.xyz",
+        "record_type": "A",
+        "proxied": true
+    }
+]
