@@ -12,8 +12,6 @@ This project provides a free alternative to paid dynamic DNS services like NoIP.
 {
     "api_key": "your_cloudflare_api_key",
     "email": "your_cloudflare_email",
-    "zone_id": "your_cloudflare_zone_id"
-    //optional multiple zone ids
     "zone_ids": {
 		  "website_name1":"cloudflare_zone_id1",
 		  "website_name2":"cloudflare_zone_id2"
@@ -35,11 +33,13 @@ To get your Cloudflare API key and zone ID:
         "record_name": "sub.domain.xyz",
         "record_type": "A",
         "proxied": true
-	//optional if using zone_ids
-	"website_name": "domain.xyz"
+		"website_name": "domain.xyz"
 	},
 	{
-	...
+	    "record_name": "sub.domain1.xyz",
+        "record_type": "A",
+        "proxied": true
+		"website_name": "domain1.xyz"
 	}
 ]
 ```
@@ -54,8 +54,8 @@ The `content` field will be automatically updated with the IP address of the mac
 crontab -e
 ```
 
-Add the following line to run the script every minute:
-(one HN user rightly pointed out that since it's a home server 1 minute update is more appropriate; this frequency is your max downtime.)
+Add the following line to run the script every minute, this script will run every second for 60 times.
+(one HN user rightly pointed out that since it's a home server 1 second update is more appropriate; this frequency is your max downtime. Update: from this version onwards, this program will only update Cloudflare if IP changes.)
 
 ```bash
 */1 * * * * cd /path/to/cloudflare-noip && /usr/bin/python3 main.py
