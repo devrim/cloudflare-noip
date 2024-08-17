@@ -14,7 +14,10 @@ This project provides a free alternative to paid dynamic DNS services like NoIP.
     "email": "your_cloudflare_email",
     "zone_id": "your_cloudflare_zone_id"
     //optional multiple zone ids
-    "zone_ids": [["website_name","cloudflare_zone_id"],["website_name","cloudflare_zone_id"],...]
+    "zone_ids": {
+		  "website_name1":"cloudflare_zone_id1",
+		  "website_name2":"cloudflare_zone_id2"
+		}
 }
 ```
 
